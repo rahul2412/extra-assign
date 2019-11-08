@@ -1,0 +1,28 @@
+@import './variables.scss';
+
+.FormStyle{
+  text-align: $align;
+  margin-top: 7%;
+  box-shadow: 5px 10px #888888;
+  border :$border;
+  height : 70vh;
+  margin-left: 40%;
+  margin-right: 40%;
+}
+hr {
+  border :$border;
+}
+.Textbox{
+  width: 65%;
+}
+img{
+  width: 70%;
+}
+
+button.Login{
+  border-radius: 8px;
+  padding: 12px 12px;
+  background-color: $color;
+  border: $border;
+  font-size: 12px;
+}
