@@ -1,4 +1,4 @@
-# extra-assign
+# Extra-assign
 
 ## How to run-
 - download and extract the repository.
@@ -13,4 +13,6 @@
 
 ## Technologies used along with React-
 - Redux, Redux-saga, Scss
+
+## Demo of app-
 
