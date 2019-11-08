@@ -12,7 +12,7 @@
 - Dummy users can also be viewed from data.json file inside 'src/data/data.json'.
 
 ## Technologies used along with React-
-- Redux, Redux-saga, Scss
+- Redux (state manager), Redux-saga (middleware), Scss (Ui), flexbox (Ui).
 
 ## Demo of app-
 Login page:
