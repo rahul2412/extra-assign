@@ -7,7 +7,7 @@ function* task() {
 
 }
 
-export default function* rootSaga(id, password) {
+export default function* rootSaga() {
     yield takeEvery('Add_id', task);
 }
 // it runs in the background from starting, checking when 'Add_id' action is dispatched to the store
