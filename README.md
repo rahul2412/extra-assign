@@ -1,5 +1,5 @@
 # Extra-assign
-An assignment checking all the concepts of react 
+An assignment checking all the concepts of react from basics to advanced.
 
 ## How to run-
 - download and extract the repository.
