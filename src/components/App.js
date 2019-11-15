@@ -23,10 +23,8 @@ class App extends React.Component {
     if(e.target.value!=="")  // checking if a city is selected or not
     {
         this.props.onSelectCity(e.target.value);  // triggering redux saga for fetching weather api
-        
     }
-    
-  }
+   }
   
   panelAnimation() // sidebar open/close
   {
@@ -42,12 +40,13 @@ class App extends React.Component {
     return (
       <div>
         <h1>Hi {this.props.id},</h1>
-        
         <Link to ="/"> <button className="Logout">Logout</button></Link>
+      
         <div className="Sidenav" style={{width:this.state.width}}>
           <h4>About us information</h4>
           <p> Work life balance is just a state of mind.</p>
         </div>
+      
         <br/>
         <h1>Select City</h1>
         
@@ -66,22 +65,20 @@ class App extends React.Component {
           {this.state.selectValue && (
             <div><h4>Temperature- {this.props.temp}</h4>
             <h4>Humidity- {this.props.humidity}</h4>
-            <h4>Pressure- {this.props.pressure}</h4></div>)}
+            <h4>Pressure- {this.props.pressure}</h4></div>  )}
           </div>
 
           <div className="RightBox">5 day weather Forecast
           {this.state.selectValue && (
-              this.props.fiveDaysTemp.map(item=>(<h5>Temperature- {item}</h5>)))}
+              this.props.fiveDaysTemp.map(item=>(<h5>Temperature- {item}</h5>  )))}
           </div>
         </div>
         
         <h3 onClick={this.panelAnimation}>About Us</h3>
         
       </div>
-      
     )
   }
-  
 };
 
 // getting state from redux
@@ -104,6 +101,5 @@ const mapDispatchToProps = dispatch => {
     }
   }
 }
-
 
 export default connect(mapStateToProps,mapDispatchToProps)(App); // connecting to the redux store
