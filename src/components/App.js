@@ -61,14 +61,17 @@ class App extends React.Component {
         <br/><br/>
         
         <div className="FlexContainer">
+
           <div className="LeftBox">Current Weather Data
-          {this.state.selectValue&&
+          {this.state.selectValue && (
             <div><h4>Temperature- {this.props.temp}</h4>
             <h4>Humidity- {this.props.humidity}</h4>
-          <h4>Pressure- {this.props.pressure}</h4></div>}</div>
+            <h4>Pressure- {this.props.pressure}</h4></div>)}
+          </div>
+
           <div className="RightBox">5 day weather Forecast
-          {this.state.selectValue&&(
-          this.props.fiveDaysTemp.map(item=>(<h5>Temperature- {item}</h5>)))}
+          {this.state.selectValue && (
+              this.props.fiveDaysTemp.map(item=>(<h5>Temperature- {item}</h5>)))}
           </div>
         </div>
         
