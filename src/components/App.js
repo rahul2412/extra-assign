@@ -2,18 +2,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import {fetchCity} from '../redux/action/action.js'
 import '../styles/App.scss';
-
-
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state={
-      temp:"", pressure:"",
-      humidity:"",selectValue:"", width: "0px",
-      fiveDaysTemp:[]
-      
+     selectValue:"", width: "0px",
     }
     
     this.handleDropdownChange = this.handleDropdownChange.bind(this);
@@ -23,48 +19,14 @@ class App extends React.Component {
   
   handleDropdownChange(e) {
     this.setState({ selectValue: e.target.value });
-    if(e.target.value==="")  // checking if a city is selected or not
-    this.setState({ temp: "", pressure:"", humidity:"", fiveDaysTemp:[]});
-    
-    else{
-      this.callCurrentDayApi(e.target.value) // calling current weather api
-        .then(res => {this.setState({ temp: res.main.temp, pressure: res.main.pressure, humidity: res.main.humidity})
-          
-        }).catch(err => console.log(err));
-      
-      this.callFiveDayApi(e.target.value) // calling next 5 days weather api
-        .then(res => {this.setState({ fiveDaysTemp:res})
-          
-        }).catch(err => console.log(err));
-      
+
+    if(e.target.value!=="")  // checking if a city is selected or not
+    {
+        this.props.onSelectCity(e.target.value);  // triggering redux saga for fetching weather api
+        
     }
+    
   }
-  
-  callCurrentDayApi = async (city) => {
-    let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=3fbb2b31fd3e77c536be64abc677a4d1`
-    const response = await fetch(url);
-    const body = await response.json();
-    
-    
-    if (response.status !== 200) throw Error(body.message); // error handling
-    
-    return body;
-  };
-  
-  callFiveDayApi = async (city) => {
-    
-    let url = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&mode=json&appid=3fbb2b31fd3e77c536be64abc677a4d1`;
-    const response = await fetch(url);
-    const body = await response.json();
-    
-    if (response.status !== 200) throw Error(body.message); // error handling
-    
-    const tempArray=[];
-    for(let i=0;i<5;i++) // getting temperatures of next 5 days
-    {tempArray.push(body.list[i].main.temp);}
-    
-    return tempArray;
-  };
   
   panelAnimation() // sidebar open/close
   {
@@ -75,9 +37,7 @@ class App extends React.Component {
   }
   
   
-  
   render() {
-    
     
     return (
       <div>
@@ -102,19 +62,19 @@ class App extends React.Component {
         
         <div className="FlexContainer">
           <div className="LeftBox">Current Weather Data
-            <h4>Temperature- {this.state.temp}</h4>
-            <h4>Humidity- {this.state.humidity}</h4>
-            <h4>Pressure- {this.state.pressure}</h4></div>
+          {this.state.selectValue&&
+            <div><h4>Temperature- {this.props.temp}</h4>
+            <h4>Humidity- {this.props.humidity}</h4>
+          <h4>Pressure- {this.props.pressure}</h4></div>}</div>
           <div className="RightBox">5 day weather Forecast
-            {this.state.fiveDaysTemp.map(item=>(<h5>Temperature- {item}</h5>))}
+          {this.state.selectValue&&(
+          this.props.fiveDaysTemp.map(item=>(<h5>Temperature- {item}</h5>)))}
           </div>
         </div>
         
         <h3 onClick={this.panelAnimation}>About Us</h3>
         
-        
       </div>
-      
       
     )
   }
@@ -125,9 +85,22 @@ class App extends React.Component {
 const mapStateToProps = state => {
   return {
     id: state.id,
-    password: state.password
+    password: state.password,
+    temp : state.temp,
+    pressure: state.pressure,
+    humidity: state.humidity,
+    fiveDaysTemp: state.fiveDaysTemp
+  }
+}
+
+// dispatching city name to redux saga
+const mapDispatchToProps = dispatch => {
+  return {
+    onSelectCity: (city) => {
+      dispatch(fetchCity(city))
+    }
   }
 }
 
 
-export default connect(mapStateToProps)(App); // connecting to the redux store
+export default connect(mapStateToProps,mapDispatchToProps)(App); // connecting to the redux store
